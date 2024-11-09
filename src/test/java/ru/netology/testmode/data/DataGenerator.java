@@ -1,4 +1,6 @@
 package ru.netology.testmode.data;
+
+import com.google.gson.Gson;
 import com.github.javafaker.Faker;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.filter.log.LogDetail;
@@ -14,6 +16,7 @@ import static io.restassured.RestAssured.given;
 
 
 public class DataGenerator {
+
     static final RequestSpecification requestSpec = new RequestSpecBuilder()
             .setBaseUri("http://localhost")
             .setPort(9999)
@@ -22,6 +25,7 @@ public class DataGenerator {
             .log(LogDetail.ALL)
             .build();
 
+    private static Gson gson = new Gson();
     private static final Faker faker = new Faker(new Locale("en"));
 
     private DataGenerator() {
@@ -30,7 +34,7 @@ public class DataGenerator {
     private static void sendRequest(RegistrationDto user) {
         given()
                 .spec(requestSpec)
-                .body(user)
+                .body(gson.toJson(user))
                 .when()
                 .post("/api/system/users")
                 .then()

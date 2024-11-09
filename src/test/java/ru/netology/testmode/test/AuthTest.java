@@ -1,8 +1,11 @@
 package ru.netology.testmode.test;
 
+import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+
 
 import static com.codeborne.selenide.Condition.exactText;
 import static com.codeborne.selenide.Condition.visible;
@@ -20,6 +23,8 @@ class AuthTest {
     void setup() {
         open("http://localhost:9999");
     }
+
+
 
     @Test
     @DisplayName("Should successfully login with active registered user")
@@ -86,6 +91,5 @@ class AuthTest {
         $("[data-test-id='password'] input").setValue(wrongPassword);
         $(".button").click();
         $("[data-test-id='error-notification'] .notification__content").shouldBe(visible).shouldBe(exactText("Ошибка! Неверно указан логин или пароль"));
-
     }
 }
